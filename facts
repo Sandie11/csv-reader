@@ -1,0 +1,33 @@
+import csv
+import random
+
+class DogFacts:
+    def __init__(self, csv_path):
+        self.facts = []
+        self.load_facts(csv_path)
+
+    def load_facts(self, csv_path):
+        with open(csv_path, 'r') as csv_file:
+            csv_reader = csv.DictReader(csv_file)
+            for row in csv_reader:
+                self.facts.append(row)
+
+    def get_random_fact(self):
+        return random.choice(self.facts)
+
+    def get_sorted_facts(self):
+        return sorted(self.facts, key=lambda x: x['fact'])
+
+if __name__ == "__main__":
+    dog_facts = DogFacts("dog_facts.csv")
+    random_fact = dog_facts.get_random_fact()
+    sorted_facts = dog_facts.get_sorted_facts()
+
+    print("Random Dog Fact:")
+    print("Fact:", random_fact['fact'])
+    print("Source:", random_fact['source'])
+    print("\nSorted Dog Facts:")
+    for fact in sorted_facts:
+        print("Fact:", fact['fact'])
+        print("Source:", fact['source'])
+        print("-" * 30)
